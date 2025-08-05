@@ -1,4 +1,3 @@
-# Browser UI
+# scrcpy client definitions
 
-Another way to build Python browser-based GUI applications.
-This package is aimed to show your Python application's GUI in the browser.
+The scrcpy client HID and inject definitions, which is used to easily develop applications based on scrcpy-server with Python.
