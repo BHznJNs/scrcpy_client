@@ -101,6 +101,8 @@ class HIDMouseInputEvent:
 def MouseMoveEvent(x: int, y: int, buttons_state: MouseButtonStateStore) -> HIDMouseInputEvent:
     data = [0, 0, 0, 0]
     data[0] = buttons_state.mouse_button
+    # When convert int into bytes, the int value can not be negative.
+    # In the server side, the value over 127 will overflow, and will be converted into the correct negative value
     data[1] = clamp(x, -127, 127) % 256
     data[2] = clamp(y, -127, 127) % 256
     data[3] = 0
