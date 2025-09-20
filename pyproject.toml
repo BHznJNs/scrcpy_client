@@ -1,6 +1,6 @@
 [project]
 name = "scrcpy_client_def"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="BHznJNs", email="bhznjns@qq.com" },
 ]

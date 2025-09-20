@@ -1,6 +1,4 @@
 import struct
-
-
 from ..defs import ControlMsgType, SDL_Scancode,\
                    HID_ID_KEYBOARD, HID_ID_MOUSE, HID_KEYBOARD_INPUT_SIZE, HID_KEYBOARD_MAX_KEYS, HID_KEYBOARD_REPORT_DESC, HID_MOUSE_INPUT_SIZE, HID_MOUSE_REPORT_DESC, KeymodStateStore, MouseButtonStateStore
 from ..utils import clamp
