@@ -1,9 +1,7 @@
 [project]
 name = "scrcpy_client_def"
-version = "0.1.1"
-authors = [
-  { name="BHznJNs", email="bhznjns@qq.com" },
-]
+version = "0.1.2"
+authors = [{ name = "BHznJNs", email = "bhznjns@qq.com" }]
 description = "A partial implementation of scrcpy."
 readme = "README.md"
 requires-python = ">=3.9"
