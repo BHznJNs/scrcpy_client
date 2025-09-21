@@ -6,7 +6,7 @@ HID Mouse Definition
 '''
 
 HID_ID_MOUSE = 2
-HID_MOUSE_INPUT_SIZE = 4
+HID_MOUSE_INPUT_SIZE = 5
 HID_INPUT_DATA_MAX_SIZE = 15
 
 class HID_MouseButton(IntEnum):
