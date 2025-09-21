@@ -21,7 +21,7 @@ class HID_MouseButton(IntEnum):
     def from_sdl_button(button: int) -> 'HID_MouseButton':
         if button > SDL_BUTTON_X2 or button < SDL_BUTTON_LEFT:
             return HID_MouseButton.MOUSE_BUTTON_NONE
-        return SDL_BUTTON(button)
+        return HID_MouseButton(SDL_BUTTON(button))
 
 class MouseButtonStateStore:
     def __init__(self):
