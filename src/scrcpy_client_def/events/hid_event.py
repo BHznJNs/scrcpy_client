@@ -117,6 +117,6 @@ def MouseClickEvent(buttons_state: MouseButtonStateStore) -> HIDMouseInputEvent:
 def MouseScrollEvent(dy: int, dx: int) -> HIDMouseInputEvent:
     data = [0, 0, 0, 0, 0]
     data[3] = clamp(dy, -127, 127) % 256
-    data[4] = clamp(dy, -127, 127) % 256
+    data[4] = clamp(dx, -127, 127) % 256
     input_event = HIDMouseInputEvent(data)
     return input_event
