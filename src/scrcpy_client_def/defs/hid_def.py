@@ -96,6 +96,21 @@ HID_MOUSE_REPORT_DESC = bytes([
     # Input (Data, Variable, Relative): 3 position bytes (X, Y, Wheel)
     0x81, 0x06,
 
+    # Usage Page (Consumer Page)
+    0x05, 0x0C,
+    # Usage(AC Pan)
+    0x0A, 0x38, 0x02,
+    # Logical Minimum (-127)
+    0x15, 0x81,
+    # Logical Maximum (127)
+    0x25, 0x7F,
+    # Report Size (8)
+    0x75, 0x08,
+    # Report Count (1)
+    0x95, 0x01,
+    # Input (Data, Variable, Relative): 1 byte (AC Pan)
+    0x81, 0x06,
+
     # End Collection
     0xC0,
 
