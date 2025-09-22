@@ -6,17 +6,22 @@ from ..utils import clamp
 class HIDKeyboardInitEvent:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_UHID_CREATE # 8
     id_ = HID_ID_KEYBOARD # 16
-    name = 0 # 8
+    vendor_id = 0 # 16
+    product_id = 0 # 16
+    name = "" # 8
     report_desc_size: int = len(HID_KEYBOARD_REPORT_DESC) # 16
     report_desc: bytes = HID_KEYBOARD_REPORT_DESC
     def serialize(self) -> bytes:
         buf = struct.pack(
-            ">BHBH",
+            ">BHHH",
             self.msg_type.value,
             self.id_,
-            self.name,
-            self.report_desc_size,
+            self.vendor_id,
+            self.product_id,
         )
+        name_bytes = self.name.encode('utf-8')[:127]
+        buf += struct.pack('B', len(name_bytes)) + name_bytes
+        buf += struct.pack('>H', len(self.report_desc))
         buf += self.report_desc
         return buf
 
@@ -63,18 +68,23 @@ def KeyEmptyEvent() -> HIDKeyboardInputEvent:
 
 class HIDMouseInitEvent:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_UHID_CREATE # 8
-    id_: int = HID_ID_MOUSE # 16
-    name = 0 # 8
+    id_ = HID_ID_MOUSE # 16
+    vendor_id: int = 0 # 16
+    product_id: int = 0 # 16
+    name = "" # 8
     report_desc_size: int = len(HID_MOUSE_REPORT_DESC) # 16
     report_desc: bytes = HID_MOUSE_REPORT_DESC
     def serialize(self) -> bytes:
         buf = struct.pack(
-            ">BHBH",
+            ">BHHH",
             self.msg_type.value,
             self.id_,
-            self.name,
-            self.report_desc_size,
+            self.vendor_id,
+            self.product_id,
         )
+        name_bytes = self.name.encode('utf-8')[:127]
+        buf += struct.pack('B', len(name_bytes)) + name_bytes
+        buf += struct.pack('>H', len(self.report_desc))
         buf += self.report_desc
         return buf
 
