@@ -1,7 +1,32 @@
 import struct
-from ..defs import ControlMsgType, SDL_Scancode,\
+from dataclasses import dataclass
+from ..defs import ControlMsgType, DeviceMsgType, SDL_Scancode,\
                    HID_ID_KEYBOARD, HID_ID_MOUSE, HID_KEYBOARD_INPUT_SIZE, HID_KEYBOARD_MAX_KEYS, HID_KEYBOARD_REPORT_DESC, HID_MOUSE_INPUT_SIZE, HID_MOUSE_REPORT_DESC, KeymodStateStore, MouseButtonStateStore
 from ..utils import clamp
+
+"""
+This event is sent from server to client, indicates the HID keyboard outputs.
+"""
+class HIDOutputEvent:
+    @dataclass
+    class HIDOutput:
+        id: int   # 16
+        size: int # 16
+        data: bytes
+
+    @staticmethod
+    def construct(data: bytes) -> tuple[HIDOutput, bytes] | None:
+        msg_type = data[0]
+        if msg_type != DeviceMsgType.DEVICE_MSG_TYPE_UHID_OUTPUT:
+            return None
+        if len(data) < 5:
+            # length of msg_type + id + size is 5
+            return None
+        id_, size = struct.unpack(">HH", data[1:6])
+        if size > len(data) - 5:
+            return None
+        data = data[5:5+size]
+        return HIDOutputEvent.HIDOutput(id_, size, data), data[5+size:]
 
 class HIDKeyboardInitEvent:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_UHID_CREATE # 8

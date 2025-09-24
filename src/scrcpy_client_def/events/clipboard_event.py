@@ -1,17 +1,11 @@
 import struct
-
 from enum import IntEnum
-from ..defs import ControlMsgType
+from ..defs import ControlMsgType, DeviceMsgType
 
 class CopyKey(IntEnum):
     COPY_KEY_NONE = 0
     COPY_KEY_COPY = 1
     COPY_KEY_CUT  = 2
-
-class DeviceMsgType(IntEnum):
-    DEVICE_MSG_TYPE_CLIPBOARD = 0
-    DEVICE_MSG_TYPE_ACK_CLIPBOARD = 1
-    DEVICE_MSG_TYPE_UHID_OUTPUT = 2
 
 class GetClipboardEvent:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_GET_CLIPBOARD
@@ -26,7 +20,7 @@ class GetClipboardEvent:
         return buf
 
 """
-This event is sent from server to the client
+This event is sent with the latest clipboard content from server to the client
 when the clipboard of the Android side updated.
 """
 class GetClipboardEventResponse:
@@ -66,3 +60,19 @@ class SetClipboardEvent:
         )
         buf += self.text
         return buf
+
+"""
+This event is sent from server to the client,
+as a response to the request to set clipboard.
+"""
+class SetClipboardAckEvent:
+    @staticmethod
+    def consume(data: bytes) -> tuple[int, bytes] | None:
+        msg_type = data[0]
+        if msg_type != DeviceMsgType.DEVICE_MSG_TYPE_ACK_CLIPBOARD:
+            return None
+        if len(data) < 9:
+            return None
+        sequence: int = struct.unpack(">Q", data[1:9])[0]
+        remain_data = data[9:]
+        return sequence, remain_data
