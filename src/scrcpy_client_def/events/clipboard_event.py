@@ -25,9 +25,13 @@ class GetClipboardEvent:
         )
         return buf
 
+"""
+This event is sent from server to the client
+when the clipboard of the Android side updated.
+"""
 class GetClipboardEventResponse:
     @staticmethod
-    def deserialize(data: bytes) -> str | None:
+    def consume(data: bytes) -> tuple[str, bytes] | None:
         msg_type = data[0]
         if msg_type != DeviceMsgType.DEVICE_MSG_TYPE_CLIPBOARD:
             return None
@@ -37,7 +41,12 @@ class GetClipboardEventResponse:
         clipboard_len: int = struct.unpack(">I", data[1:5])[0]
         if clipboard_len > len(data) - 5:
             return None
-        return data[5:].decode("utf-8")
+        try:
+            parsed_text = data[5:5+clipboard_len].decode("utf-8")
+            remain_data = data[5+clipboard_len:]
+            return parsed_text, remain_data
+        except UnicodeDecodeError:
+            return None
 
 class SetClipboardEvent:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_SET_CLIPBOARD
