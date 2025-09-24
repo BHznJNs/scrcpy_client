@@ -130,3 +130,8 @@ def MouseScrollEvent(dy: int, dx: int) -> HIDMouseInputEvent:
     data[4] = clamp(dx, -127, 127) % 256
     input_event = HIDMouseInputEvent(data)
     return input_event
+
+def MouseEmptyEvent() -> HIDMouseInputEvent:
+    data = [0, 0, 0, 0, 0]
+    input_event = HIDMouseInputEvent(data)
+    return input_event
