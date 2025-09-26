@@ -1,6 +1,6 @@
 [project]
 name = "scrcpy_client_def"
-version = "0.1.10"
+version = "0.1.11"
 authors = [{ name = "BHznJNs", email = "bhznjns@qq.com" }]
 description = "A partial implementation of scrcpy."
 readme = "README.md"
