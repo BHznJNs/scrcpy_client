@@ -15,7 +15,7 @@ class HIDOutputEvent:
         data: bytes
 
     @staticmethod
-    def construct(data: bytes) -> tuple[HIDOutput, bytes] | None:
+    def consume(data: bytes) -> tuple[HIDOutput, bytes] | None:
         msg_type = data[0]
         if msg_type != DeviceMsgType.DEVICE_MSG_TYPE_UHID_OUTPUT:
             return None
