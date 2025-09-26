@@ -26,8 +26,7 @@ class HIDOutputEvent:
         if size > len(data) - 5:
             # did not received all data
             return None
-        data = data[5:5+size]
-        return HIDOutputEvent.HIDOutput(id_, size, data), data[5+size:]
+        return HIDOutputEvent.HIDOutput(id_, size, data[5:5+size]), data[5+size:]
 
 class HIDKeyboardInitEvent:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_UHID_CREATE # 8
