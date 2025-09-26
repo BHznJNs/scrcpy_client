@@ -22,8 +22,9 @@ class HIDOutputEvent:
         if len(data) < 5:
             # length of msg_type + id + size is 5
             return None
-        id_, size = struct.unpack(">HH", data[1:6])
+        id_, size = struct.unpack(">HH", data[1:5])
         if size > len(data) - 5:
+            # did not received all data
             return None
         data = data[5:5+size]
         return HIDOutputEvent.HIDOutput(id_, size, data), data[5+size:]
