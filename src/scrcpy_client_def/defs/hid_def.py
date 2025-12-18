@@ -30,6 +30,9 @@ class MouseButtonStateStore:
     def has_key(self, button: HID_MouseButton) -> bool:
         return (self.mouse_button & button.value) != 0
 
+    def has_any_key(self) -> bool:
+        return self.mouse_button != 0
+
     def mouse_down(self, button: HID_MouseButton):
         self.mouse_button |= button.value
 
