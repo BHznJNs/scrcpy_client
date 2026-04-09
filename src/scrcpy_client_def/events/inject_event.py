@@ -1,6 +1,12 @@
 import struct
-from ..defs import MouseButton, ControlMsgType,\
-                   POINTER_ID_MOUSE, AKeyCode, AKeyEventAction, AMotionEventAction, AMotionEventButtons, ScreenPosition
+
+from ..defs import (
+    MouseButton, ControlMsgType,
+    POINTER_ID_MOUSE,
+    AKeyCode, AKEYCODE_METASTATE, AKeyEventAction,
+    AMotionEventAction, AMotionEventButtons,
+    ScreenPosition
+)
 
 class InjectText:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_INJECT_TEXT
@@ -23,9 +29,16 @@ class InjectKeyCode:
     repeat: int = 0
     metastate: int = 0
 
-    def __init__(self, key_code: AKeyCode, action: AKeyEventAction) -> None:
+    def __init__(self,
+                 key_code: AKeyCode,
+                 action: AKeyEventAction,
+                 metastate: AKEYCODE_METASTATE | None = None,
+                 ) -> None:
         self.key_code = key_code
         self.action = action
+        self.metastate = (metastate
+                          if metastate is not None
+                          else InjectKeyCode.metastate)
 
     def serialize(self) -> bytes:
         buf = struct.pack(

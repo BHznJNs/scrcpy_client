@@ -42,34 +42,34 @@ class AMotionEventAction(IntEnum):
 
     # Bit mask of the parts of the action code that are the action itself.
     AMOTION_EVENT_ACTION_MASK = 0xff
-    
+
     # Bits in the action code that represent a pointer index, used with
     # AMOTION_EVENT_ACTION_POINTER_DOWN and AMOTION_EVENT_ACTION_POINTER_UP.
     # Shifting down by AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT provides the actual pointer
     # index where the data for the pointer going up or down can be found.
     AMOTION_EVENT_ACTION_POINTER_INDEX_MASK = 0xff00
-    
+
     # A pressed gesture has started, the motion contains the initial starting location.
     AMOTION_EVENT_ACTION_DOWN = 0
-    
+
     # A pressed gesture has finished, the motion contains the final release location
     # as well as any intermediate points since the last down or move event.
     AMOTION_EVENT_ACTION_UP = 1
-    
+
     # A change has happened during a press gesture (between AMOTION_EVENT_ACTION_DOWN and
     # AMOTION_EVENT_ACTION_UP). The motion contains the most recent point, as well as
     # any intermediate points since the last down or move event.
     AMOTION_EVENT_ACTION_MOVE = 2
-    
+
     # The current gesture has been aborted.
     # You will not receive any more points in it. You should treat this as
     # an up event, but not perform any action that you normally would.
     AMOTION_EVENT_ACTION_CANCEL = 3
-    
+
     # A movement has happened outside of the normal bounds of the UI element.
     # This does not provide a full gesture, but only the initial location of the movement/touch.
     AMOTION_EVENT_ACTION_OUTSIDE = 4
-    
+
     # A non-primary pointer has gone down.
     # The bits in AMOTION_EVENT_ACTION_POINTER_INDEX_MASK indicate which pointer changed.
     AMOTION_EVENT_ACTION_POINTER_DOWN = 5
@@ -77,12 +77,12 @@ class AMotionEventAction(IntEnum):
     # A non-primary pointer has gone up.
     # The bits in AMOTION_EVENT_ACTION_POINTER_INDEX_MASK indicate which pointer changed.
     AMOTION_EVENT_ACTION_POINTER_UP = 6
-    
+
     # A change happened but the pointer is not down (unlike AMOTION_EVENT_ACTION_MOVE).
     # The motion contains the most recent point, as well as any intermediate points since
     # the last hover move event.
     AMOTION_EVENT_ACTION_HOVER_MOVE = 7
-    
+
     # The motion event contains relative vertical and/or horizontal scroll offsets.
     # Use getAxisValue to retrieve the information from AMOTION_EVENT_AXIS_VSCROLL
     # and AMOTION_EVENT_AXIS_HSCROLL.
@@ -90,16 +90,16 @@ class AMotionEventAction(IntEnum):
     # This action is always delivered to the window under the pointer, which
     # may not be the window currently touched.
     AMOTION_EVENT_ACTION_SCROLL = 8
-    
+
     # The pointer is not down but has entered the boundaries of a window or view.
     AMOTION_EVENT_ACTION_HOVER_ENTER = 9
-    
+
     # The pointer is not down but has exited the boundaries of a window or view.
     AMOTION_EVENT_ACTION_HOVER_EXIT = 10
-    
+
     # One or more buttons have been pressed.
     AMOTION_EVENT_ACTION_BUTTON_PRESS = 11
-    
+
     # One or more buttons have been released.
     AMOTION_EVENT_ACTION_BUTTON_RELEASE = 12
 
@@ -431,3 +431,37 @@ class AKeyCode(IntEnum):
     AKEYCODE_SYSTEM_NAVIGATION_LEFT = 282
     AKEYCODE_SYSTEM_NAVIGATION_RIGHT = 283
     AKEYCODE_ALL_APPS = 284
+
+class AKEYCODE_METASTATE(IntEnum):
+    """
+    Android KeyEvent metastate flags.
+    Source: https://developer.android.com/reference/android/view/KeyEvent
+    """
+
+    META_SHIFT_ON         = 0x00000001
+    META_ALT_ON           = 0x00000002
+    META_SYM_ON           = 0x00000004
+    META_FUNCTION_ON      = 0x00000008
+
+    META_ALT_LEFT_ON      = 0x00000010
+    META_ALT_RIGHT_ON     = 0x00000020
+
+    META_SHIFT_LEFT_ON    = 0x00000040
+    META_SHIFT_RIGHT_ON   = 0x00000080
+
+    META_CTRL_ON          = 0x00001000
+    META_CTRL_LEFT_ON     = 0x00002000
+    META_CTRL_RIGHT_ON    = 0x00004000
+
+    META_META_ON          = 0x00010000
+    META_META_LEFT_ON     = 0x00020000
+    META_META_RIGHT_ON    = 0x00040000
+
+    META_CAPS_LOCK_ON     = 0x00100000
+    META_NUM_LOCK_ON      = 0x00200000
+    META_SCROLL_LOCK_ON   = 0x00400000
+
+    META_SHIFT_MASK       = 0x000000c1  # SHIFT_ON | SHIFT_LEFT_ON | SHIFT_RIGHT_ON
+    META_ALT_MASK         = 0x00000032  # ALT_ON | ALT_LEFT_ON | ALT_RIGHT_ON
+    META_CTRL_MASK        = 0x00007000  # CTRL_ON | CTRL_LEFT_ON | CTRL_RIGHT_ON
+    META_META_MASK        = 0x00070000  # META_ON | META_LEFT_ON | META_RIGHT_ON
