@@ -2,6 +2,22 @@ import struct
 from ..defs import MouseButton, ControlMsgType,\
                    POINTER_ID_MOUSE, AKeyCode, AKeyEventAction, AMotionEventAction, AMotionEventButtons, ScreenPosition
 
+class InjectText:
+    msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_INJECT_TEXT
+
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+    def serialize(self) -> bytes:
+        text_bytes = self.text.encode("utf-8")
+        buf = struct.pack(
+            ">BI",
+            self.msg_type.value,
+            len(text_bytes),
+        )
+        buf += text_bytes
+        return buf
+
 class InjectKeyCode:
     msg_type: ControlMsgType = ControlMsgType.MSG_TYPE_INJECT_KEYCODE
     repeat: int = 0
